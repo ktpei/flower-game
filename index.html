@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>He Loves Me</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#EFEBCE;overflow:hidden;user-select:none}
+#msg{position:fixed;top:28px;width:100%;text-align:center;font-family:'Georgia',serif;font-size:26px;font-style:italic;letter-spacing:.04em;opacity:0;transition:opacity .5s;z-index:10;pointer-events:none}
+#msg.v{opacity:1}
+#msg.lm{color:#c97878}
+#msg.ln{color:#6a8a4a}
+#msg.h{color:#9a9a7a;font-size:20px}
+#nameOverlay{position:fixed;inset:0;background:#EFEBCE;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;transition:opacity .5s}
+#nameOverlay.hide{opacity:0;pointer-events:none}
+#nameOverlay input{border:none;border-bottom:2px solid #c5a878;background:transparent;font-family:Georgia,serif;font-size:24px;font-style:italic;color:#6a6a5a;text-align:center;outline:none;padding:8px 4px;width:240px}
+#nameOverlay label{font-family:Georgia,serif;font-size:18px;color:#9a9a7a;font-style:italic;margin-bottom:12px}
+#nameOverlay button{margin-top:20px;border:none;background:#7AB450;color:#EFEBCE;font-family:Georgia,serif;font-size:16px;font-style:italic;padding:8px 28px;border-radius:20px;cursor:pointer;transition:background .2s}
+#nameOverlay button:hover{background:#6a9e44}
+svg{width:100vw;height:100vh;display:block}
+.tool{cursor:pointer;transition:filter .15s}.tool:hover{filter:brightness(1.1)}
+.tool.off{opacity:.3;cursor:default;pointer-events:none}
+.pi{cursor:pointer}.pi:hover .pm{filter:brightness(1.1)}
+</style>
+</head>
+<body>
+<div id="nameOverlay">
+  <label>who are you thinking of?</label>
+  <input id="nameInput" type="text" placeholder="enter a name" autofocus>
+  <button id="nameBtn">begin</button>
+</div>
+<div id="msg"></div>
+<svg id="sc" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet">
+<defs>
+  <!-- Daisy pink -->
+  <linearGradient id="g0" x1=".5" y1="1" x2=".5" y2="0" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#C07868"/><stop offset="18%" stop-color="#D49090"/>
+    <stop offset="45%" stop-color="#F0B8C0"/><stop offset="100%" stop-color="#F9CDD5"/>
+  </linearGradient>
+  <!-- Tulip gold -->
+  <linearGradient id="g1" x1=".5" y1="1" x2=".5" y2="0" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#B89840"/><stop offset="22%" stop-color="#D4B860"/>
+    <stop offset="100%" stop-color="#EDCB73"/>
+  </linearGradient>
+  <!-- Star lavender -->
+  <linearGradient id="g2" x1=".5" y1="1" x2=".5" y2="0" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#8070A8"/><stop offset="22%" stop-color="#A090C0"/>
+    <stop offset="100%" stop-color="#C8B8E0"/>
+  </linearGradient>
+  <!-- Fan coral -->
+  <linearGradient id="g3" x1=".5" y1="1" x2=".5" y2="0" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#C07050"/><stop offset="22%" stop-color="#D89880"/>
+    <stop offset="100%" stop-color="#F0BCA8"/>
+  </linearGradient>
+  <!-- Bell periwinkle -->
+  <linearGradient id="g4" x1=".5" y1="1" x2=".5" y2="0" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#6878A8"/><stop offset="22%" stop-color="#8898C8"/>
+    <stop offset="100%" stop-color="#B0C0E8"/>
+  </linearGradient>
+  <radialGradient id="cg" cx=".4" cy=".35" r=".65">
+    <stop offset="0%" stop-color="#A8B038"/><stop offset="100%" stop-color="#7AB450"/>
+  </radialGradient>
+  <radialGradient id="dr">
+    <stop offset="30%" stop-color="#D6983B" stop-opacity=".3"/>
+    <stop offset="100%" stop-color="#D6983B" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+
+<!-- Ground -->
+<line x1="40" y1="545" x2="860" y2="545" stroke="#c5c2a5" stroke-width="1" opacity=".3" stroke-dasharray="3 5"/>
+<g id="glvs"></g><!-- ground leaves -->
+<g id="fls"></g><!-- flowers -->
+<g id="sts"></g><!-- stars -->
+<g id="dps"></g><!-- drops -->
+
+<!-- Seed bag -->
+<g id="sbag" class="tool" transform="translate(790,140)">
+  <rect x="2" y="-20" width="52" height="44" rx="3" fill="#D6983B"/>
+  <path d="M 12,-20 Q 28,-32,44,-20" fill="none" stroke="#D6983B" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 12,-20 Q 28,-27,44,-20" fill="none" stroke="#b8842a" stroke-width="2"/>
+  <rect x="5" y="2" width="46" height="5" fill="#b8842a" rx="1"/>
+  <ellipse cx="28" cy="-7" rx="5" ry="3.5" fill="#b8842a"/>
+  <path d="M 26,-8 Q 28,-5,30,-7" stroke="#D6983B" stroke-width=".5" fill="none"/>
+  <text x="28" y="40" text-anchor="middle" fill="#D6983B" font-family="Georgia,serif" font-size="11" font-style="italic" opacity=".5">seed</text>
+</g>
+
+<!-- Watering can -->
+<g id="wcan" class="tool" transform="translate(790,270)">
+  <path d="M 0,-26 L 56,-26 L 52,26 L 4,26 Z" fill="#7AB450"/>
+  <line x1="4" y1="26" x2="52" y2="26" stroke="#5d9340" stroke-width="2"/>
+  <rect x="2" y="-10" width="52" height="5" rx="1" fill="#A8B038"/>
+  <rect x="3" y="10" width="50" height="5" rx="1" fill="#A8B038"/>
+  <path d="M 15,-26 C 15,-50,41,-50,41,-26" fill="none" stroke="#7AB450" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 15,-26 C 15,-46,41,-46,41,-26" fill="none" stroke="#A8B038" stroke-width="2"/>
+  <path d="M 0,-18 L-44,0 L-42,7 L 2,-9 Z" fill="#7AB450"/>
+  <circle cx="-46" cy="4" r="7" fill="#5d9340"/>
+  <circle cx="-49" cy="2" r="1.2" fill="#A8B038"/><circle cx="-45" cy="0" r="1.2" fill="#A8B038"/>
+  <circle cx="-42" cy="3" r="1.2" fill="#A8B038"/><circle cx="-48" cy="6" r="1.2" fill="#A8B038"/>
+  <text x="28" y="44" text-anchor="middle" fill="#7AB450" font-family="Georgia,serif" font-size="11" font-style="italic" opacity=".5">water</text>
+</g>
+
+<!-- Fertilizer -->
+<g id="fert" class="tool" transform="translate(790,400)">
+  <rect x="4" y="-16" width="48" height="38" rx="3" fill="#7AB450"/>
+  <path d="M 14,-16 Q 28,-28,42,-16" fill="none" stroke="#7AB450" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 14,-16 Q 28,-23,42,-16" fill="none" stroke="#5d9340" stroke-width="2"/>
+  <rect x="6" y="4" width="44" height="5" fill="#A8B038" rx="1"/>
+  <path d="M 28,-4 C 22,-12,16,-9,20,-4 C 16,3,22,6,28,-4Z" fill="#A8B038"/>
+  <text x="28" y="38" text-anchor="middle" fill="#7AB450" font-family="Georgia,serif" font-size="11" font-style="italic" opacity=".5">fertilize</text>
+</g>
+
+<!-- Trash can -->
+<g id="trash" class="tool" transform="translate(790,510)">
+  <rect x="8" y="-12" width="40" height="32" rx="2" fill="#b0a898"/>
+  <rect x="4" y="-16" width="48" height="6" rx="2" fill="#a09888"/>
+  <rect x="20" y="-22" width="16" height="8" rx="3" fill="none" stroke="#a09888" stroke-width="2"/>
+  <line x1="18" y1="-4" x2="18" y2="14" stroke="#EFEBCE" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <line x1="28" y1="-4" x2="28" y2="14" stroke="#EFEBCE" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <line x1="38" y1="-4" x2="38" y2="14" stroke="#EFEBCE" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+  <text x="28" y="36" text-anchor="middle" fill="#a09888" font-family="Georgia,serif" font-size="11" font-style="italic" opacity=".5">clear</text>
+</g>
+</svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+const NS='http://www.w3.org/2000/svg';
+const GY=540,MAX_F=11;
+const msgEl=document.getElementById('msg');
+const flsG=document.getElementById('fls');
+const glvsG=document.getElementById('glvs');
+const stG=document.getElementById('sts');
+const dpG=document.getElementById('dps');
+const sbag=document.getElementById('sbag');
+const wcan=document.getElementById('wcan');
+const fert=document.getElementById('fert');
+const trash=document.getElementById('trash');
+
+let flowers=[],globalPick=0,busy=false,playerName='He';
+
+// --- Seeded random ---
+function sr(s,n){const x=Math.sin(s*127.1+n*311.7)*43758.5453;return x-Math.floor(x)}
+
+// --- Flower types ---
+const TYPES=[
+  {name:'daisy',pMin:6,pMax:8,grad:'url(#g0)',cR:10,cFill:'url(#cg)',stamen:true,sCol:'#D6983B',gen:daisyP},
+  {name:'tulip',pMin:5,pMax:7,grad:'url(#g1)',cR:7,cFill:'#A8B038',stamen:false,gen:tulipP},
+  {name:'star',pMin:5,pMax:7,grad:'url(#g2)',cR:8,cFill:'#9888B0',stamen:true,sCol:'#E0C060',gen:starP},
+  {name:'fan',pMin:4,pMax:6,grad:'url(#g3)',cR:9,cFill:'#D09078',stamen:false,gen:fanP},
+  {name:'bell',pMin:5,pMax:8,grad:'url(#g4)',cR:8,cFill:'#E8D860',stamen:true,sCol:'#E8D860',gen:bellP},
+];
+
+function daisyP(s){const r=n=>sr(s,n),w=20+r(1)*8,h=55+r(2)*10,bL=4+r(3)*4,bR=4+r(4)*4,t=(r(5)-.5)*3;
+return`M0 0C${-(6+r(6)*4)} ${-h*.23},${-(w+bL)} ${-h*.52},${-(w-2+r(8)*2)} ${-h*.82}Q${-w*.55} ${-h*1.02},${t} ${-h}Q${w*.55} ${-h*1.02},${w-2+r(11)*2} ${-h*.82}C${w+bR} ${-h*.52},${6+r(7)*4} ${-h*.23},0 0Z`}
+
+function tulipP(s){const r=n=>sr(s,n),w=11+r(1)*5,h=55+r(2)*12,c=3+r(3)*3;
+return`M0 0C${-c} ${-h*.2},${-(w+2)} ${-h*.45},${-w} ${-h*.75}Q${-w*.7} ${-h*.96},0 ${-h}Q${w*.7} ${-h*.96},${w} ${-h*.75}C${w+2} ${-h*.45},${c} ${-h*.2},0 0Z`}
+
+function starP(s){const r=n=>sr(s,n),w=9+r(1)*5,h=60+r(2)*12;
+return`M0 0C${-w*.4} ${-h*.15},${-w} ${-h*.35},${-w*.9} ${-h*.6}C${-w*.7} ${-h*.8},${-w*.2} ${-h*.96},0 ${-h}C${w*.2} ${-h*.96},${w*.7} ${-h*.8},${w*.9} ${-h*.6}C${w} ${-h*.35},${w*.4} ${-h*.15},0 0Z`}
+
+function fanP(s){const r=n=>sr(s,n),w=22+r(1)*10,h=42+r(2)*10,bL=4+r(3)*5,bR=4+r(4)*5;
+return`M0 0C${-w*.3} ${-h*.25},${-(w+bL)} ${-h*.5},${-w} ${-h*.8}Q${-w*.5} ${-h*1.06},0 ${-h}Q${w*.5} ${-h*1.06},${w} ${-h*.8}C${w+bR} ${-h*.5},${w*.3} ${-h*.25},0 0Z`}
+
+function bellP(s){const r=n=>sr(s,n),w=14+r(1)*6,h=50+r(2)*14,n=3+r(3)*3;
+return`M0 0C${-n} ${-h*.15},${-(w*.6)} ${-h*.3},${-w} ${-h*.55}C${-w*1.1} ${-h*.75},${-w*.7} ${-h*.95},0 ${-h}C${w*.7} ${-h*.95},${w*1.1} ${-h*.75},${w} ${-h*.55}C${w*.6} ${-h*.3},${n} ${-h*.15},0 0Z`}
+
+// --- Helpers ---
+function el(t){return document.createElementNS(NS,t)}
+function sa(e,a){for(const[k,v]of Object.entries(a))e.setAttribute(k,v)}
+function showM(t,c){msgEl.textContent=t;msgEl.className='v '+(c||'')}
+function hideM(){msgEl.className=''}
+
+// --- Name entry ---
+const nameOverlay=document.getElementById('nameOverlay');
+const nameInput=document.getElementById('nameInput');
+const nameBtn=document.getElementById('nameBtn');
+function startGame(){
+  const n=nameInput.value.trim();
+  if(!n)return;
+  playerName=n;
+  nameOverlay.classList.add('hide');
+  setTimeout(()=>nameOverlay.style.display='none',500);
+  showM('click seed bag to plant a flower','h');
+}
+nameBtn.onclick=startGame;
+nameInput.addEventListener('keydown',e=>{if(e.key==='Enter')startGame()});
+
+// --- Init ---
+sbag.onclick=onSeed;
+wcan.onclick=onWater;
+fert.onclick=onFert;
+trash.onclick=onTrash;
+
+// --- Plant ---
+function onSeed(){
+  if(busy||flowers.length>=MAX_F)return;
+  const x=getX();
+  if(!x)return;
+  hideM();
+  plantFlower(x);
+}
+
+function getX(){
+  for(let a=0;a<30;a++){
+    const x=80+Math.random()*580;
+    let ok=true;
+    for(const f of flowers)if(Math.abs(f.x-x)<55){ok=false;break}
+    if(ok)return x;
+  }
+  return null;
+}
+
+function plantFlower(x){
+  const type=TYPES[Math.floor(Math.random()*TYPES.length)];
+  const topY=220+Math.random()*200;
+  // depth: 0=back/tall, 1=front/short — derive size from height
+  const depth=(topY-220)/200;
+  const sz=1.2-depth*0.65+Math.random()*0.1; // back~1.2, front~0.55
+  const f={x,topY,type,sz,growth:0,state:'growing',picked:0,pCount:0,
+    grp:null,st:null,stH:null,stL:0,stHL:0,lfs:[],lfS:[],
+    hd:null,pg:null,hdS:false,ptS:false};
+  buildFlower(f);
+  f.lfS=f.lfs.map(()=>false);
+  flowers.push(f);
+  addGroundLeaves(x);
+  spawnStars(x,GY-10,4);
+
+  // Seed drop animation
+  const seed=el('g');
+  const se=el('ellipse');sa(se,{rx:7,ry:5,fill:'#D6983B',stroke:'#b8842a','stroke-width':.7});
+  seed.appendChild(se);
+  seed.setAttribute('transform',`translate(${790+28},${140})`);
+  dpG.appendChild(seed);
+  gsap.to(seed,{attr:{transform:`translate(${x},${GY-5})`},duration:.5,ease:'power2.in',
+    onComplete:()=>{gsap.to(seed,{opacity:0,duration:.2,onComplete:()=>seed.remove()});
+      gsap.to(f.soil,{attr:{opacity:.5},duration:.3})}});
+}
+
+function buildFlower(f){
+  const g=el('g');
+  // Soil mound
+  const soil=el('ellipse');sa(soil,{cx:f.x,cy:GY-3,rx:14,ry:4,fill:'#c5a878',opacity:0});
+  g.appendChild(soil);f.soil=soil;
+
+  // Stem
+  const dx=(Math.random()-.5)*8;
+  const sd=`M${f.x} ${GY} C${f.x+dx} ${GY-(GY-f.topY)*.35},${f.x-dx} ${GY-(GY-f.topY)*.7},${f.x} ${f.topY+10}`;
+  const sw=2.5+f.sz*2;
+  const st=el('path');sa(st,{d:sd,stroke:'#7AB450','stroke-width':sw,fill:'none','stroke-linecap':'round'});
+  g.appendChild(st);f.st=st;
+  const stH=el('path');sa(stH,{d:sd,stroke:'#A8B038','stroke-width':sw*.4,fill:'none','stroke-linecap':'round',opacity:.4});
+  g.appendChild(stH);f.stH=stH;
+
+  // Leaves — more on tall/back flowers, fewer on short/front
+  const depth=(f.topY-220)/200;
+  const nLeaves=depth<.33?2+Math.floor(Math.random()*2):depth<.66?1+Math.floor(Math.random()*2):1;
+  const usedPos=[];
+  for(let i=0;i<nLeaves;i++){
+    let pos;
+    do{pos=.15+Math.random()*.65}while(usedPos.some(p=>Math.abs(p-pos)<.15));
+    usedPos.push(pos);
+    const ly=f.topY+(GY-f.topY)*pos;
+    const s=Math.random()>.5?-1:1;
+    const ang=25+Math.random()*25;
+    const sc=.7+Math.random()*.5;
+    const lg=el('g');lg.setAttribute('opacity','0');
+    lg.setAttribute('transform',`translate(${f.x+s*(1+Math.random()*3)},${ly}) rotate(${s*-ang}) scale(${sc})`);
+    const lp=el('path');
+    lp.setAttribute('d',s<0?'M0 0C-8-12,-36-26,-48-14Q-42-2,-32 5C-18 10,-4 5,0 0Z':'M0 0C8-12,36-26,48-14Q42-2,32 5C18 10,4 5,0 0Z');
+    lp.setAttribute('fill','#7AB450');lg.appendChild(lp);
+    const lv=el('path');
+    sa(lv,{d:s<0?'M-1 0C-10-8,-24-14,-40-8':'M1 0C10-8,24-14,40-8',stroke:'#A8B038','stroke-width':1,fill:'none',opacity:.4});
+    lg.appendChild(lv);g.appendChild(lg);f.lfs.push(lg);
+  }
+
+  // Flower head (scaled)
+  const hd=el('g');hd.setAttribute('transform',`translate(${f.x},${f.topY}) scale(${f.sz})`);hd.setAttribute('opacity','0');
+  const ring=el('circle');sa(ring,{r:22,fill:'url(#dr)'});hd.appendChild(ring);
+  const pg=el('g');hd.appendChild(pg);f.pg=pg;
+  const ct=el('circle');sa(ct,{r:f.type.cR,fill:f.type.cFill});hd.appendChild(ct);
+
+  if(f.type.stamen){
+    const sg=el('g');
+    [{a:-25,h:18,s:1.2},{a:30,h:15,s:1},{a:-70,h:13,s:.9},{a:65,h:16,s:1.1}].forEach(d=>{
+      const gg=el('g');gg.setAttribute('transform',`rotate(${d.a})`);
+      const sk=el('path');sa(sk,{d:`M0-${f.type.cR-2}Q${(Math.random()-.5)*4}-${d.h*.6},0-${d.h+f.type.cR-2}`,
+        stroke:f.type.sCol,'stroke-width':1.2,'stroke-linecap':'round',fill:'none'});
+      gg.appendChild(sk);
+      const tc=el('circle');sa(tc,{cx:0,cy:-(d.h+f.type.cR-2),r:d.s*1.2,fill:f.type.sCol});
+      gg.appendChild(tc);sg.appendChild(gg);
+    });
+    hd.appendChild(sg);
+  }
+  g.appendChild(hd);f.hd=hd;f.grp=g;
+  // Z-order: taller (lower topY) behind shorter (higher topY)
+  let inserted=false;
+  for(const ch of flsG.children){
+    const cf=flowers.find(ff=>ff.grp===ch);
+    if(cf&&cf.topY>f.topY){flsG.insertBefore(g,ch);inserted=true;break}
+  }
+  if(!inserted)flsG.appendChild(g);
+
+  // Init stem dash
+  f.stL=st.getTotalLength();f.stHL=stH.getTotalLength();
+  st.style.strokeDasharray=f.stL;st.style.strokeDashoffset=f.stL;
+  stH.style.strokeDasharray=f.stHL;stH.style.strokeDashoffset=f.stHL;
+}
+
+// --- Ground leaves (upward from soil) ---
+function addGroundLeaves(x){
+  const n=3+Math.floor(Math.random()*4);
+  for(let i=0;i<n;i++){
+    const lf=el('path');
+    const h=25+Math.random()*30;
+    const w=5+Math.random()*4;
+    const lean=(Math.random()-.5)*w*1.5;
+    // Jagged upward leaf like dandelion greens
+    lf.setAttribute('d',`M0 0C${-w*.3} ${-h*.2},${-w+lean*.3} ${-h*.45},${-w*.6+lean} ${-h*.7}Q${lean*.8} ${-h*1.05},0 ${-h}Q${-lean*.8} ${-h*1.05},${w*.6+lean} ${-h*.7}C${w+lean*.3} ${-h*.45},${w*.3} ${-h*.2},0 0Z`);
+    const lx=x+(Math.random()-.5)*50;
+    const tilt=(Math.random()-.5)*40;
+    const sc=.6+Math.random()*.5;
+    lf.setAttribute('transform',`translate(${lx},${GY}) rotate(${tilt}) scale(${sc})`);
+    lf.setAttribute('fill',Math.random()>.5?'#7AB450':'#6a9e44');
+    lf.setAttribute('opacity','0');
+    lf.classList.add('glf');
+    glvsG.appendChild(lf);
+    gsap.to(lf,{attr:{opacity:.35+Math.random()*.2},duration:.4,delay:i*.08});
+  }
+}
+
+// --- Water ---
+function onWater(){
+  if(busy||!flowers.some(f=>f.state==='growing'))return;
+  busy=true;
+  gsap.to(wcan,{rotation:-10,transformOrigin:'52px 26px',duration:.25,ease:'power1.out'});
+  const nx=790-46,ny=274;
+  for(let i=0;i<6;i++){
+    const d=el('path'),ox=(Math.random()-.5)*6;
+    d.setAttribute('d',`M${nx+ox},${ny}q2,4,0,8q-2,-4,0,-8Z`);
+    d.setAttribute('fill','#8ec8e8');d.setAttribute('opacity','0');dpG.appendChild(d);
+    const dl=.1+i*.06;
+    // Target center of garden
+    const tx=350-nx+(Math.random()-.5)*200,ty=GY-ny-20;
+    gsap.to(d,{attr:{opacity:.7},duration:.08,delay:dl});
+    gsap.to(d,{x:tx,duration:.4,delay:dl,ease:'none'});
+    gsap.to(d,{y:ty,duration:.4,delay:dl,ease:'power2.in',
+      onComplete:()=>gsap.to(d,{attr:{opacity:0},duration:.12,onComplete:()=>d.remove()})});
+  }
+  setTimeout(()=>{
+    gsap.to(wcan,{rotation:0,duration:.2});
+    flowers.forEach(f=>{if(f.state==='growing'){f.growth=Math.min(100,f.growth+18);updateFlower(f)}});
+    spawnStars(400,GY-100,6);
+    busy=false;
+    checkBlooms();
+  },600);
+}
+
+// --- Fertilize ---
+function onFert(){
+  if(busy||!flowers.some(f=>f.state==='growing'))return;
+  busy=true;
+  gsap.to(fert,{rotation:5,transformOrigin:'28px 0',duration:.08,yoyo:true,repeat:3});
+  const fx=818,fy=400;
+  for(let i=0;i<5;i++){
+    const p=el('circle');
+    sa(p,{cx:fx+(Math.random()-.5)*16,cy:fy+(Math.random()-.5)*10,r:2+Math.random()*2,
+      fill:Math.random()>.5?'#A8B038':'#D6983B',opacity:0});dpG.appendChild(p);
+    const dl=i*.06;
+    gsap.to(p,{attr:{opacity:.8},duration:.08,delay:dl});
+    gsap.to(p,{attr:{cx:350+(Math.random()-.5)*200,cy:GY-5},duration:.4,delay:dl,ease:'power1.in',
+      onComplete:()=>gsap.to(p,{attr:{opacity:0},duration:.15,onComplete:()=>p.remove()})});
+  }
+  setTimeout(()=>{
+    flowers.forEach(f=>{if(f.state==='growing'){f.growth=Math.min(100,f.growth+35);updateFlower(f)}});
+    spawnStars(400,GY-120,10);
+    busy=false;
+    checkBlooms();
+  },500);
+}
+
+// --- Growth ---
+function updateFlower(f){
+  const sp=Math.max(0,Math.min(1,(f.growth-5)/70));
+  gsap.to(f.st,{strokeDashoffset:f.stL*(1-sp),duration:.5,ease:'power1.out'});
+  gsap.to(f.stH,{strokeDashoffset:f.stHL*(1-sp),duration:.5,ease:'power1.out'});
+  if(f.growth>15)gsap.to(f.soil,{attr:{opacity:Math.max(0,.5-(f.growth-15)/40)},duration:.3});
+  // Leaves (staggered reveal based on count)
+  f.lfs.forEach((lf,i)=>{
+    const t=25+i*(45/Math.max(1,f.lfs.length));
+    if(f.growth>=t&&!f.lfS[i]){f.lfS[i]=true;
+      gsap.fromTo(lf,{opacity:0,scale:0},{opacity:1,scale:1,duration:.5,ease:'back.out(1.5)',transformOrigin:'0 0'})}
+  });
+  // Head
+  if(f.growth>=80&&!f.hdS){f.hdS=true;f.hd.setAttribute('opacity','1');
+    gsap.from(f.hd,{scale:0,duration:.5,ease:'back.out(1.5)',transformOrigin:'0 0'})}
+  // Petals
+  if(f.growth>=95&&!f.ptS){f.ptS=true;createPetals(f)}
+  // Bounce
+  gsap.to(f.grp,{y:-3,duration:.06,yoyo:true,repeat:1,ease:'power1.inOut'});
+}
+
+function checkBlooms(){
+  flowers.forEach(f=>{
+    if(f.growth>=100&&f.state==='growing'){
+      f.state='mature';
+      showM('pick a petal','h');setTimeout(hideM,2000);
+    }
+  });
+}
+
+// --- Petals ---
+function createPetals(f){
+  const t=f.type;
+  f.pCount=t.pMin+Math.floor(Math.random()*(t.pMax-t.pMin+1));
+  const step=360/f.pCount,fs=Math.random()*1000;
+  for(let i=0;i<f.pCount;i++){
+    const ang=step*i-90,ps=fs+i*7.3;
+    const wr=el('g');wr.classList.add('pw');
+    const inn=el('g');inn.classList.add('pi');
+    inn.setAttribute('transform',`rotate(${ang})`);
+    const pt=el('path');pt.setAttribute('d',t.gen(ps));
+    pt.setAttribute('fill',t.grad);pt.setAttribute('stroke','#EFEBCE');
+    pt.setAttribute('stroke-width','.4');pt.classList.add('pm');
+    inn.appendChild(pt);
+    // center vein
+    const v=el('path');sa(v,{d:'M0-5Q0-30,0-50',stroke:'#EFEBCE','stroke-width':.7,fill:'none',opacity:.25});
+    inn.appendChild(v);
+    wr.appendChild(inn);
+    gsap.from(wr,{scale:0,opacity:0,duration:.4,delay:i*.06,ease:'back.out(1.4)',transformOrigin:'0 0'});
+    inn.addEventListener('click',()=>pickPetal(f,wr));
+    f.pg.appendChild(wr);
+  }
+}
+
+function pickPetal(f,wr){
+  if(f.state!=='mature'||wr.dataset.f)return;
+  wr.dataset.f='1';
+  wr.querySelector('.pi').style.cssText='cursor:default;pointer-events:none';
+  globalPick++;f.picked++;
+  const lm=globalPick%2===1;
+  showM(lm?`${playerName} loves me`:`${playerName} loves me not`,lm?'lm':'ln');
+
+  const fall=GY-f.topY;
+  const lx=(Math.random()-.5)*180,ly=fall-10+Math.random()*20;
+  const lr=(Math.random()-.5)*180,dur=.7+Math.random()*.3;
+  gsap.to(wr,{y:ly,duration:dur,ease:'power2.in'});
+  gsap.to(wr,{x:lx,rotation:lr,duration:dur+.25,ease:'power1.out',
+    onComplete:()=>{
+      if(f.picked>=f.pCount){
+        f.state='done';
+        setTimeout(()=>removeFlower(f),2000);
+      }
+    }
+  });
+}
+
+function removeFlower(f){
+  gsap.to(f.grp,{opacity:0,y:10,duration:.6,ease:'power1.in',onComplete:()=>{
+    f.grp.remove();
+    flowers=flowers.filter(ff=>ff!==f);
+    if(flowers.length===0){showM('plant more flowers!','h')}
+  }});
+}
+
+function onTrash(){
+  if(busy||flowers.length===0)return;
+  busy=true;
+  // Fade out all flowers
+  flowers.forEach(f=>{
+    gsap.to(f.grp,{opacity:0,y:15,duration:.5,ease:'power1.in',onComplete:()=>f.grp.remove()});
+  });
+  // Fade out ground leaves
+  glvsG.querySelectorAll('.glf').forEach(lf=>{
+    gsap.to(lf,{attr:{opacity:0},duration:.4,onComplete:()=>lf.remove()});
+  });
+  setTimeout(()=>{
+    flowers=[];globalPick=0;busy=false;
+    showM('click seed bag to plant a flower','h');
+  },600);
+}
+
+// --- Stars ---
+function spawnStars(cx,cy,n){
+  for(let i=0;i<n;i++){
+    const s=el('polygon');
+    const x=cx+(Math.random()-.5)*200,y=cy+(Math.random()-.5)*80;
+    const sz=3+Math.random()*4,pts=[];
+    for(let j=0;j<8;j++){
+      const a=(j/8)*Math.PI*2-Math.PI/2,r=j%2===0?sz:sz*.35;
+      pts.push(`${x+Math.cos(a)*r},${y+Math.sin(a)*r}`);
+    }
+    s.setAttribute('points',pts.join(' '));
+    s.setAttribute('fill',['#D6983B','#F9CDD5','#A8B038','#EFEBCE','#C8B8E0','#EDCB73'][Math.floor(Math.random()*6)]);
+    s.setAttribute('opacity','0');stG.appendChild(s);
+    const dl=i*.05;
+    gsap.to(s,{opacity:.85,duration:.12,delay:dl});
+    gsap.to(s,{y:-(20+Math.random()*30),rotation:Math.random()*90,opacity:0,
+      duration:.7+Math.random()*.3,delay:dl+.18,ease:'power1.out',onComplete:()=>s.remove()});
+  }
+}
+</script>
+</body>
+</html>
