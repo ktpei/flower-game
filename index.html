@@ -373,7 +373,7 @@ function onFert(){
       onComplete:()=>gsap.to(p,{attr:{opacity:0},duration:.15,onComplete:()=>p.remove()})});
   }
   setTimeout(()=>{
-    flowers.forEach(f=>{if(f.state==='growing'){f.growth=Math.min(100,f.growth+35);updateFlower(f)}});
+    flowers.forEach(f=>{if(f.state==='growing'){f.growth=100;updateFlower(f)}});
     spawnStars(400,GY-120,10);
     busy=false;
     checkBlooms();
